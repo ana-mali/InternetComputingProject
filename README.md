@@ -10,6 +10,7 @@ This project is a web server that interacts between web users and a database ser
 - [@adrianvuong](https://github.com/adrianvuong)
 - [@TerryJTTran](https://github.com/TerryJTTran)
 - [@Brou-0510](https://github.com/Brou-0510)
+- [@KaranSingh6](https://github.com/KaranSingh6)
 
 
 
