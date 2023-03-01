@@ -8,8 +8,8 @@ This project is a web server that interacts between web users and a database ser
 
 - [@ana-mali](https://www.github.com/ana-mali)
 - [@adrianvuong](https://github.com/adrianvuong)
-- [@TerryJTTran] (https://github.com/TerryJTTran)
-- [@Brou-0510] (https://github.com/Brou-0510)
+- [@TerryJTTran](https://github.com/TerryJTTran)
+- [@Brou-0510](https://github.com/Brou-0510)
 
 
 
