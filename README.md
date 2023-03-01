@@ -24,5 +24,9 @@ There are specific libraries that the user must ensure to have installed on thei
 
 - Web server
 - Database server
-- 
+
+## Programming Language
+- PHP used for backend
+- Javascript for frontend
+- mysql for database
 
