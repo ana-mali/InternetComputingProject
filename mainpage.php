@@ -1,9 +1,14 @@
 <?php
 //required to use mysql connection from log in info
 require "login.php";
+$array=getParameterValues();
+$user=$array[0];
+$pass=$array[1];
+$conn=mysqli_connect('localhost', $user, $pass, 'cp476');
 
 if(isset($_POST['course'])) {
     $query = "SELECT * FROM course";
+
     $result = mysqli_query($conn, $query);
     echo "<table>";
     echo "<tr><th>StudentID</th><th>CourseCode</th><th>Test1</th><th>Test2</th><th>Test3</th><th>FinalExam</th></tr>";
@@ -36,6 +41,7 @@ if(isset($_POST['name'])) {
         }
         echo "<td>" . $row['StudentID'] . "</td>";
         echo "<td>" . $row['name'] . "</td>";
+        echo "</tr>";
     }
     echo "</table>";
 }
@@ -54,15 +60,22 @@ if(isset($_POST['final'])){
         echo "<td>" . $row['StudentID'] . "</td>";
         echo "<td>" . $row['course'] . "</td>";
         echo "<td>" . $row['final'] . "</td>";
+        echo"</tr>";
     }
     echo "</table>";
 }
+if(isset($_POST['delete'])){
+    header('Location: delete.php');
+}
+
 
 ?>
 <form method="POST">
+    <legend>Database Access</legend>
     <button type="submit" name="course">COURSE</button>
     <button type="submit" name="name">NAME</button>
     <button type="submit" name="final">FINAL</button>
-
+    <button type="submit" name="delete">DELETE</button>
+    <button type="submit" name="add">ADD</button>
 
 </form>
