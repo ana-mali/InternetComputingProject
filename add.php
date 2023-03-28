@@ -12,36 +12,44 @@ if(isset($_POST['add'])){
     $Two = $_POST['Test2'];
     $Three = $_POST['Test3'];
     $Final = $_POST['FinalExam'];
-    $query="SELECT * FROM name WHERE StudentID='$StudentID'";
-    $result = mysqli_query($conn, $query);
-    if (mysqli_num_rows($result) > 0) { //check if student already exists
-        $query="SELECT * FROM name WHERE StudentID='$StudentID' AND Name='$Name'";
+    if (empty($_POST['StudentID']) or empty($_POST['Name']) or
+        empty($_POST['Course']) or empty($_POST['Test1']) or
+            empty($_POST['Test2']) or empty($_POST['Test3']) or empty($_POST['FinalExam']) ) {
+        $query="SELECT * FROM name WHERE StudentID='$StudentID'";
         $result = mysqli_query($conn, $query);
-        if (mysqli_num_rows($result) >! 0) {
-            echo "StudentID and Name do not match";
-        }else{
+        if (mysqli_num_rows($result) > 0) { //check if student already exists
+            $query="SELECT * FROM name WHERE StudentID='$StudentID' AND Name='$Name'";
+            $result = mysqli_query($conn, $query);
+            if (mysqli_num_rows($result) >! 0) {
+                echo "StudentID and Name do not match";
+            }else{
+                $query="INSERT INTO Course (StudentID, Course, Test1,Test2,Test3)
+    VALUES ('$StudentID', '$Course', '$One','$Two','$Three','$Final');";
+                $result = mysqli_query($conn, $query);
+                if ($result){
+                    echo "Addition successful";
+                }else{
+                    echo "Addition unsuccessful";
+                }
+
+            }
+        }else{ //Create new student in both tables
             $query="INSERT INTO Course (StudentID, Course, Test1,Test2,Test3)
     VALUES ('$StudentID', '$Course', '$One','$Two','$Three','$Final');";
             $result = mysqli_query($conn, $query);
-            if ($result){
-                echo "Addition successful";
+            $query1="INSERT INTO Name (StudentID, name) VALUES ('$StudentID', '$Name');";
+            $result1=mysqli_query($conn, $query1);
+            if ($result and $result1){
+                echo "Addition successful in both tables";
             }else{
-                echo "Addition unsuccessful";
+                echo "Addition unsuccessful in one or more tables";
             }
+        }
 
-        }
-    }else{ //Create new student in both tables
-        $query="INSERT INTO Course (StudentID, Course, Test1,Test2,Test3)
-    VALUES ('$StudentID', '$Course', '$One','$Two','$Three','$Final');";
-        $result = mysqli_query($conn, $query);
-        $query1="INSERT INTO Name (StudentID, name) VALUES ('$StudentID', '$Name');";
-        $result1=mysqli_query($conn, $query1);
-        if ($result and $result1){
-            echo "Addition successful in both tables";
-        }else{
-            echo "Addition unsuccessful in one or more tables";
-        }
+    }else{
+        echo "Please fill all information";
     }
+
 }
 if(isset($_POST['GoBack'])){
     header('Location: mainpage.php');
