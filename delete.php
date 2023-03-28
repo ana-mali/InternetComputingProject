@@ -7,9 +7,6 @@ $conn=mysqli_connect('localhost', $user, $pass, 'cp476');
 if(isset($_POST['delete'])){
     $StudentID = $_POST['StudentID'];
     $Course = $_POST['Course'];
-    if ($StudentID=="ana" and $Course=='123'){
-        echo 'youre good';
-    }
     $query="DELETE FROM Course WHERE StudentID="+$StudentID +"and Course="+$Course+";";
     $result = mysqli_query($conn, $query);
     if ($result) {
