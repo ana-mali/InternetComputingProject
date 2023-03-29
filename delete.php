@@ -1,5 +1,5 @@
 <?php
-require 'mainpage.php';
+session_start();
 $user = $_SESSION['username'];
 $pass = $_SESSION['password'];
 $db = $_SESSION['database'];
@@ -9,10 +9,10 @@ $preparedstatement1 = $conn->prepare("DELETE FROM coursetable WHERE StudentID=? 
 $preparedstatement1->bind_param('is',$StudentID, $Course);
 
 $preparedstatement2 = $conn->prepare("DELETE FROM nametable WHERE StudentID=?");
-$preparedstatement2->bind_param('is',$StudentID);
+$preparedstatement2->bind_param('i',$StudentID);
 
-$preparedstatement3 = $conn->prepare("DELETE FROM nametable WHERE StudentID=?");
-$preparedstatement3->bind_param('is',$StudentID);
+$preparedstatement3 = $conn->prepare("DELETE FROM coursetable WHERE StudentID=?");
+$preparedstatement3->bind_param('i',$StudentID);
 
 #If delete button clicked
 if(isset($_POST['delete'])){
@@ -21,9 +21,10 @@ if(isset($_POST['delete'])){
 	$StudentID = $_POST['StudentID'];
     $Course = $_POST['Course'];
 	
-	if (empty($_POST($Course)) {
+	if (empty($_POST['Course'])) {
 		$preparedstatement2->execute();
-		
+		$preparedstatement3->execute();
+	}
 	#Prepared statement
 	$preparedstatement1->execute();
     #$query="DELETE FROM CourseTable WHERE StudentID="+$StudentID +"and Course="+$Course+";";
@@ -38,13 +39,13 @@ if(isset($_POST['delete'])){
     }
 
 	#If text box is empty
-	if(isset($_POST['course'])){
-        header('Location: mainpage.php');
-		exit;
-    }
+
 	
 }
-
+if(isset($_POST['course'])){
+    header('Location: mainpage.php');
+	exit;    
+}
 #if(isset($_POST['course'])){
 		#header('Location: mainpage.php');
 		#exit;
@@ -53,21 +54,20 @@ if(isset($_POST['delete'])){
 ?>
 
 <form method="POST">
-    <p><br> <br> </p>
-
+	<button type="submit" name="course">Main Paige</button><br>
     <label for="StudentID">StudentID:</label>
-    <input type="text" name="StudentID" id="StudentID">
+    <input type="text" name="StudentID" id="StudentID"><br>
     <label for="Course">Course:</label>
-    <input type="text" name="Course" id="Course">
+    <input type="text" name="Course" id="Course"><br>
     <button type="submit" name="delete">DELETE</button>
-    <button class="backbutton">GoBack</button>
-	<button type="submit" name="course">COURSE!</button>
+    <!--<button class="backbutton">GoBack</button>-->
+	
 
     <style>
         .backbutton {
             position: fixed;
             top: 0;
-            left: 0;
+            left: 200;
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;

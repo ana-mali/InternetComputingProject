@@ -5,6 +5,14 @@ $user = $_SESSION['username'];
 $password = $_SESSION['password'];
 $db = $_SESSION['database'];
 $conn = new mysqli("localhost", $user, $password, $db);
+if(isset($_POST['delete'])){
+    header('Location: delete.php');
+}
+if(isset($_POST['add'])){
+    header('Location: add.php');
+}
+echo "<div style='position:fixed;top:50px'>";
+
 if(isset($_POST['course'])) {
 
     $query = "SELECT * FROM CourseTable";
@@ -15,9 +23,9 @@ if(isset($_POST['course'])) {
     $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
-		if ($i % 6 == 0) {
-            echo "<tr>";
-        }
+		
+        echo "<tr>";
+        
         echo "<td>" . $row['StudentID'] . "</td>";
         echo "<td>" . $row['Course'] . "</td>";
         echo "<td>" . $row['Test1'] . "</td>";
@@ -64,15 +72,12 @@ if(isset($_POST['final'])){
     }
     echo "</table>";
 }
-if(isset($_POST['delete'])){
-    header('Location: delete.php');
-}
-if(isset($_POST['add'])){
-    header('Location: add.php');
-}
+echo "</div>";
+
 
 
 ?>
+<div style = "position:fixed;">
 <form method="POST">
     <legend>Database Access</legend>
     <button type="submit" name="course">COURSE</button>
@@ -82,3 +87,4 @@ if(isset($_POST['add'])){
     <button type="submit" name="add">ADD</button>
 
 </form>
+</div>

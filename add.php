@@ -1,5 +1,5 @@
 <?php
-require "mainpage.php";
+session_start();
 $user = $_SESSION['username'];
 $pass = $_SESSION['password'];
 $db = $_SESSION['database'];
@@ -70,28 +70,31 @@ if(isset($_POST['add'])){
 	#}
 
 }
-
+if(isset($_POST['main'])){
+	header('Location: mainpage.php');
+}
 ?>
 
 
 
 <form method="POST">
+	<button type="submit" name="main">Main Paige</button><br>
     <label for="StudentID">StudentID:</label>
-    <input type="text" name="StudentID" id="StudentID">
+    <input type="text" name="StudentID" id="StudentID"><br>
     <label for="Name">Name:</label>
-    <input type="text" name="Name" id="Name">
+    <input type="text" name="Name" id="Name"><br>
     <label for="Course">Course:</label>
-    <input type="text" name="Course" id="Course">
+    <input type="text" name="Course" id="Course"><br>
     <label for="Test1">Test1:</label>
-    <input type="text" name="Test1" id="Test1">
+    <input type="text" name="Test1" id="Test1"><br>
     <label for="Test2">Test2:</label>
-    <input type="text" name="Test2" id="Test2">
+    <input type="text" name="Test2" id="Test2"><br>
     <label for="Test3">Test3:</label>
-    <input type="text" name="Test3" id="Test3">
+    <input type="text" name="Test3" id="Test3"><br>
     <label for="Finalexam">FinalExam:</label>
-    <input type="text" name="Finalexam" id="Finalexam">
+    <input type="text" name="Finalexam" id="Finalexam"><br>
     <button type="submit" name="add">ADD</button>
-    <button class="backbutton">GoBack</button>
+    <!--<button class="backbutton">GoBack</button>-->
 
     <style>
         .backbutton {
