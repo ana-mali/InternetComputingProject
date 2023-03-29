@@ -1,38 +1,38 @@
 <?php
 //required to use mysql connection from log in info
-require "login.php";
-$array=getParameterValues();
-$user=$array[0];
-$pass=$array[1];
-$conn=mysqli_connect('localhost', $user, $pass, 'cp476');
-
+session_start();
+$user = $_SESSION['username'];
+$password = $_SESSION['password'];
+$db = $_SESSION['database'];
+$conn = new mysqli("localhost", $user, $password, $db);
 if(isset($_POST['course'])) {
-    $query = "SELECT * FROM course";
 
-    $result = mysqli_query($conn, $query);
+    $query = "SELECT * FROM CourseTable";
+	
+    $result = $conn->query($query);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>CourseCode</th><th>Test1</th><th>Test2</th><th>Test3</th><th>FinalExam</th></tr>";
+    echo "<tr><th>StudentID</th><th>Course</th><th>Test1</th><th>Test2</th><th>Test3</th><th>Finalexam</th></tr>";
     $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
-        if ($i % 6 == 0) {
+		if ($i % 6 == 0) {
             echo "<tr>";
         }
         echo "<td>" . $row['StudentID'] . "</td>";
-        echo "<td>" . $row['CourseCode'] . "</td>";
+        echo "<td>" . $row['Course'] . "</td>";
         echo "<td>" . $row['Test1'] . "</td>";
         echo "<td>" . $row['Test2'] . "</td>";
         echo "<td>" . $row['Test3'] . "</td>";
-        echo "<td>" . $row['FinalExam'] . "</td>";
+        echo "<td>" . $row['Finalexam'] . "</td>";
     }
     echo "</table>";
 }
 
 if(isset($_POST['name'])) {
-    $query = "SELECT * FROM name";
+    $query = "SELECT * FROM NameTable";
     $result = mysqli_query($conn, $query);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>name</th><th>";
+    echo "<tr><th>StudentID</th><th>Name</th><th>";
     $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
@@ -40,7 +40,7 @@ if(isset($_POST['name'])) {
             echo "<tr>";
         }
         echo "<td>" . $row['StudentID'] . "</td>";
-        echo "<td>" . $row['name'] . "</td>";
+        echo "<td>" . $row['Name'] . "</td>";
         echo "</tr>";
     }
     echo "</table>";
@@ -50,7 +50,7 @@ if(isset($_POST['final'])){
     AS FinalGrade FROM NameTable name JOIN CourseTable course ON Course.StudentID = name.StudentID;";
     $result = mysqli_query($conn, $query);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>course</th><th>final</th><th>";
+    echo "<tr><th>StudentID</th><th>Course</th><th>FinalGrade</th><th>";
     $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
@@ -58,14 +58,17 @@ if(isset($_POST['final'])){
             echo "<tr>";
         }
         echo "<td>" . $row['StudentID'] . "</td>";
-        echo "<td>" . $row['course'] . "</td>";
-        echo "<td>" . $row['final'] . "</td>";
+        echo "<td>" . $row['Course'] . "</td>";
+        echo "<td>" . $row['FinalGrade'] . "</td>";
         echo"</tr>";
     }
     echo "</table>";
 }
 if(isset($_POST['delete'])){
     header('Location: delete.php');
+}
+if(isset($_POST['add'])){
+    header('Location: add.php');
 }
 
 

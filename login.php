@@ -1,43 +1,22 @@
 <?php
 session_start();
 
-function getParameterValues() {
+if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     $username = $_POST['username'];
     $password = $_POST['password'];
-    return array($username,$password);
-}
-class sql_connection
-{
-    private $user;
-    private $pass;
-    private $conn;
-
-    public function __construct($user, $pass)
-    {
-        $this->user = $user;
-        $this->pass = $pass;
-        $this->conn = mysqli_connect('localhost', $user, $pass, 'cp476');
-    }
-}
-if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $username = $_POST['username'];
-    $password = $_POST['password'];
-    $database = 'cp476';
     // Check if the username and password are valid
-    $conn = mysqli_connect('localhost', $username, $password, $database);
+    $database = 'cp476';
+    $conn = new mysqli("localhost", $username, $password, $database);
     // Check if the connection was successful
-    if (!$conn) {
-        die('Could not connect to database: ' . mysqli_connect_error());
-    } else {
-        if(empty($_SESSION["authenticated"]) || $_SESSION["authenticated"] != 'true') {
-            header('Location: mainpage.php');
-            }
-        exit;
-    }
+	$_SESSION["username"] = $username;
+	$_SESSION["password"] = $password;
+	$_SESSION["database"] = $database;
+	$_SESSION["connection"]=$conn;
+	header('Location: mainpage.php');
+}
 
     // Close the database connection
     //mysqli_close($conn);
-}
 ?>
 
 <form method="POST">
