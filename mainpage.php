@@ -1,6 +1,7 @@
 <?php
 //required to use mysql connection from log in info
 session_start();
+
 $user = $_SESSION['username'];
 $password = $_SESSION['password'];
 $db = $_SESSION['database'];
@@ -11,7 +12,25 @@ if(isset($_POST['delete'])){
 if(isset($_POST['add'])){
     header('Location: add.php');
 }
-echo "<div style='position:fixed;top:50px'>";
+if(isset($_POST['logout'])){
+	session_destroy();
+	header('Location: login.php');
+	die();
+}
+?>
+<div style = "position:static;">
+<form method="POST">
+    <legend>Database Access</legend>
+    <button type="submit" name="course">COURSE</button>
+    <button type="submit" name="name">NAME</button>
+    <button type="submit" name="final">FINAL</button>
+    <button type="submit" name="delete">DELETE</button>
+    <button type="submit" name="add">ADD</button>
+	<button type="submit" name="logout">LOG OUT</button>
+</form>
+</div>
+<?php
+echo "<div style='position:static;'>";
 
 if(isset($_POST['course'])) {
 
@@ -24,7 +43,7 @@ if(isset($_POST['course'])) {
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
 		
-        echo "<tr>";
+        echo "<tr><form action='edit.php' method='get'>";
         
         echo "<td>" . $row['StudentID'] . "</td>";
         echo "<td>" . $row['Course'] . "</td>";
@@ -32,6 +51,8 @@ if(isset($_POST['course'])) {
         echo "<td>" . $row['Test2'] . "</td>";
         echo "<td>" . $row['Test3'] . "</td>";
         echo "<td>" . $row['Finalexam'] . "</td>";
+		echo "<td><input type='hidden' name='id' value='".$row['StudentID']."'/><input type='hidden' name='course' value='".$row['Course']."'/><input type='submit' value='Edit'/></td>";
+		echo "</form></tr>";
     }
     echo "</table>";
 }
@@ -72,19 +93,6 @@ if(isset($_POST['final'])){
     }
     echo "</table>";
 }
+
 echo "</div>";
-
-
-
 ?>
-<div style = "position:fixed;">
-<form method="POST">
-    <legend>Database Access</legend>
-    <button type="submit" name="course">COURSE</button>
-    <button type="submit" name="name">NAME</button>
-    <button type="submit" name="final">FINAL</button>
-    <button type="submit" name="delete">DELETE</button>
-    <button type="submit" name="add">ADD</button>
-
-</form>
-</div>

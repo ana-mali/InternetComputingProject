@@ -7,8 +7,12 @@ $conn = new mysqli('localhost', $user, $pass, $db);
 #Prepared Statements
 $preparedstatement1 = $conn->prepare("INSERT INTO coursetable (StudentID,Course,Test1,Test2,Test3,Finalexam) VALUES (?,?,?,?,?,?)");
 $preparedstatement1->bind_param('isdddd',$StudentID, $Course, $One,$Two,$Three,$Finalexam);
+
 $preparedstatement2 = $conn->prepare("INSERT INTO nametable (StudentID,Name) VALUES (?,?)");
 $preparedstatement2->bind_param('is',$StudentID, $Name);
+
+$preparedstatement3 = $conn->prepare("INSERT INTO coursetable (StudentID,Course,Test1,Test2,Test3,Finalexam) VALUES (?,?,?,?,?,?)");
+$preparedstatement3->bind_param('isdddd',$StudentID, $Course, $One,$Two,$Three,$Finalexam);
 
 #Adding Querys
 if(isset($_POST['add'])){
@@ -42,9 +46,7 @@ if(isset($_POST['add'])){
             }
 			
 			else{
-                #$PS->bind_param('isdddd',$StudentID, $Course, $One,$Two,$Three,$Final);
-				$PS->execute();
-                #$result = mysqli_query($conn, $query);
+				$preparedstatement3->execute();
                 if ($result){
                     echo "Addition successful";
                 }else{

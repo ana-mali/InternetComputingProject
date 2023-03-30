@@ -16,7 +16,6 @@ $preparedstatement3->bind_param('i',$StudentID);
 
 #If delete button clicked
 if(isset($_POST['delete'])){
-    
 	#Retrieve delete text boxes
 	$StudentID = $_POST['StudentID'];
     $Course = $_POST['Course'];
