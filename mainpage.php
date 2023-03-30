@@ -18,9 +18,25 @@ if(isset($_POST['logout'])){
 	die();
 }
 ?>
+
+
+<style type="text/css">
+
+legend {
+    font-size:  1.4em;
+    font-weight:  bold;
+    background:#40f749;
+    border:1px solid #000;
+}
+* html legend{  
+    margin-top:-10px;
+    position:relative;
+}
+</style>
+
 <div style = "position:static;">
 <form method="POST">
-    <legend>Database Access</legend>
+    <legend>Student Grade Database</legend>
     <button type="submit" name="course">COURSE</button>
     <button type="submit" name="name">NAME</button>
     <button type="submit" name="final">FINAL</button>
@@ -38,7 +54,15 @@ if(isset($_POST['course'])) {
 	$result = $conn->query($query);   
 	$num_rows = mysqli_num_rows($result);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>Course</th><th>Test1</th><th>Test2</th><th>Test3</th><th>Finalexam</th></tr>";
+    echo '<table border="2" cellspacing="2" cellpadding="2"> 
+      <tr> 
+          <th> <font face="Arial">StudentID</font> </th> 
+          <th> <font face="Arial">Course</font> </th> 
+          <th> <font face="Arial">Test1</font> </th> 
+          <th> <font face="Arial">Test2</font> </th> 
+          <th> <font face="Arial">Test3</font> </th> 
+          <th> <font face="Arial">Finalexam</font> </th> 
+      </tr>';
 
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
@@ -62,7 +86,11 @@ if(isset($_POST['name'])) {
 	$result = $conn->query($query);   
 	$num_rows = mysqli_num_rows($result);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>Name</th><th>";
+    echo '<table border="2" cellspacing="2" cellpadding="2"> 
+    <tr> 
+        <th> <font face="Arial">StudentID</font> </th> 
+        <th> <font face="Arial">Name</font> </th>  
+    </tr>';
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
         echo "<tr><form action='editname.php' method='get'>";
@@ -78,7 +106,12 @@ if(isset($_POST['final'])){
     AS FinalGrade FROM NameTable name JOIN CourseTable course ON Course.StudentID = name.StudentID;";
     $result = mysqli_query($conn, $query);
     echo "<table>";
-    echo "<tr><th>StudentID</th><th>Course</th><th>FinalGrade</th><th>";
+    echo '<table border="2" cellspacing="2" cellpadding="2"> 
+    <tr> 
+        <th> <font face="Arial">StudentID</font> </th> 
+        <th> <font face="Arial">Course</font> </th> 
+        <th> <font face="Arial">Final Grade</font> </th> 
+    </tr>';
     $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
