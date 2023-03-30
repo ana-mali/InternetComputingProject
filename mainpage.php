@@ -35,11 +35,11 @@ echo "<div style='position:static;'>";
 if(isset($_POST['course'])) {
 
     $query = "SELECT * FROM CourseTable";
-	
-    $result = $conn->query($query);
+	$result = $conn->query($query);   
+	$num_rows = mysqli_num_rows($result);
     echo "<table>";
     echo "<tr><th>StudentID</th><th>Course</th><th>Test1</th><th>Test2</th><th>Test3</th><th>Finalexam</th></tr>";
-    $num_rows = mysqli_num_rows($result);
+
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
 		
@@ -59,18 +59,17 @@ if(isset($_POST['course'])) {
 
 if(isset($_POST['name'])) {
     $query = "SELECT * FROM NameTable";
-    $result = mysqli_query($conn, $query);
+	$result = $conn->query($query);   
+	$num_rows = mysqli_num_rows($result);
     echo "<table>";
     echo "<tr><th>StudentID</th><th>Name</th><th>";
-    $num_rows = mysqli_num_rows($result);
     for ($i = 0; $i < $num_rows; $i++) {
         $row = mysqli_fetch_assoc($result);
-        if ($i % 2 == 0) {
-            echo "<tr>";
-        }
+        echo "<tr><form action='editname.php' method='get'>";
         echo "<td>" . $row['StudentID'] . "</td>";
         echo "<td>" . $row['Name'] . "</td>";
-        echo "</tr>";
+		echo "<td><input type='hidden' name='id' value='".$row['StudentID']."'/><input type='hidden' name='name' value='".$row['Name']."'/><input type='submit' value='Edit'/></td>";
+        echo "</form></tr>";
     }
     echo "</table>";
 }

@@ -19,8 +19,11 @@ if(isset($_POST['edit'])){
 	$ps->execute();
 	header("Location:mainpage.php");
 }
-
-
+if(isset($_POST['delete'])){
+	$dquery= "DELETE FROM CourseTable WHERE StudentID=$id AND Course='$course'";
+	$conn->query($dquery);
+	header("Location:mainpage.php");
+}
 echo "<form method='post'>";
 echo "<label for='test1'>Test 1:</label>";
 echo "<input type='text' name='test1' id='test1' value='".$row['Test1']."'><br>";
@@ -31,5 +34,6 @@ echo "<input type='text' name='test3' id='test3' value='".$row['Test3']."'/><br>
 echo "<label for='final'>Final Exam:</label>";
 echo "<input type='text' name='final' id='final' value='".$row['Finalexam']."'/><br>";
 echo "<input type='submit' name='edit' value='Modify'/>";
+echo "<input type='submit' name='delete' value='Delete'/>";
 echo "</form>";
 ?>

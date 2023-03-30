@@ -59,7 +59,7 @@ if(isset($_POST['add'])){
             #$result = mysqli_query($conn, $query);
             $preparedstatement2->execute();
             #$result1=mysqli_query($conn, $query1);
-            if ($result and $result1){
+            if ($result){
                 echo "Addition successful in both tables";
             }else{
                 echo "Addition unsuccessful in one or more tables";
