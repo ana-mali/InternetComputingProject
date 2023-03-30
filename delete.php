@@ -27,15 +27,15 @@ if(isset($_POST['delete'])){
 	#Prepared statement
 	$preparedstatement1->execute();
     #$query="DELETE FROM CourseTable WHERE StudentID="+$StudentID +"and Course="+$Course+";";
-    #$result = mysqli_query($conn, $query);
+        $result = $preparedstatement1->execute();
     
 	#Check if delete result is successful
 	if ($result) {
-        echo "Deletion successful";
-    }
-    else{
-        echo "Deletion was unsuccessful, please check if input exists";
-    }
+        	echo "Deletion successful";
+    	}
+    	else{
+        	echo "Deletion was unsuccessful, please check if input exists";
+    	}
 
 	#If text box is empty
 
