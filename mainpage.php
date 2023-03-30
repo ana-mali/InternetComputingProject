@@ -6,6 +6,8 @@ $user = $_SESSION['username'];
 $password = $_SESSION['password'];
 $db = $_SESSION['database'];
 $conn = new mysqli("localhost", $user, $password, $db);
+$ps = $conn->prepare("SELECT name.StudentID, name.name,course.Course, course.Test1, course.Test2, course.Test3, course.Finalexam, ROUND(0.20*(course.Test1+course.Test2 +course.Test3)+0.40*course.FinalExam,1) AS FinalGrade FROM NameTable name JOIN CourseTable course ON Course.StudentID = name.StudentID WHERE name.StudentID=?");
+$ps->bind_param('i',$id);
 if(isset($_POST['delete'])){
     header('Location: delete.php');
 }
@@ -43,11 +45,31 @@ legend {
     <button type="submit" name="delete">DELETE</button>
     <button type="submit" name="add">ADD</button>
 	<button type="submit" name="logout">LOG OUT</button>
+	<input type="text" name="search"/>
+	<input type="submit" name="confirm" value="Search"/>
+	
 </form>
 </div>
 <?php
 echo "<div style='position:static;'>";
-
+if(isset($_POST['confirm'])){
+	$id = $id=mysqli_real_escape_string($conn, $_POST['search']);
+	$ps->execute();
+	$result = $ps->get_result();
+	$num_rows = mysqli_num_rows($result);
+	for($i = 0; $i< $num_rows; $i++){
+		$row = mysqli_fetch_assoc($result);
+		echo "<tr><form>";
+        
+        echo "<td>" . $row['StudentID'] . "</td>";
+		echo "<td>" . $row['name']."</td>";
+        echo "<td>" . $row['Course'] . "</td>";
+        echo "<td>" . $row['Test1'] . "</td>";
+        echo "<td>" . $row['Test2'] . "</td>";
+        echo "<td>" . $row['Test3'] . "</td>";
+        echo "<td>" . $row['Finalexam'] . "</td>";
+	}
+}
 if(isset($_POST['course'])) {
 
     $query = "SELECT * FROM CourseTable";
@@ -102,8 +124,7 @@ if(isset($_POST['name'])) {
     echo "</table>";
 }
 if(isset($_POST['final'])){
-    $query="SELECT name.StudentID, course.Course, ROUND(0.20*(course.Test1+course.Test2 +course.Test3)+0.40*course.FinalExam,1)
-    AS FinalGrade FROM NameTable name JOIN CourseTable course ON Course.StudentID = name.StudentID;";
+    $query="SELECT name.StudentID, course.Course, ROUND(0.20*(course.Test1+course.Test2 +course.Test3)+0.40*course.FinalExam,1) AS FinalGrade FROM NameTable name JOIN CourseTable course ON Course.StudentID = name.StudentID;";
     $result = mysqli_query($conn, $query);
     echo "<table>";
     echo '<table border="2" cellspacing="2" cellpadding="2"> 
