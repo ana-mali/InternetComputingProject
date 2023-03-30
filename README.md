@@ -15,12 +15,8 @@ This project is a web server that interacts between web users and a database ser
 
 
 ## Installation
-There are specific libraries that the user must ensure to have installed on their computer to properly run the program. The following lines can be inserted into cmd for installation.
-
-```bash
-  $ pip install ... 
-
-```
+There are specific libraries that the user must ensure to have installed on their computer to properly run the program. This mostly includes php and enabling mysqli in your php.ini file to ensure database acess can work. 
+It is highly useful to already have a database named "CP476" before logging into the webserver, you can use createDB.php to populate your existing database with your tables already made named coursetable and nametable. This module will work if you have NameFile.txt and CourseFile.txt in your workspace.
     
 ## Features
 
@@ -28,7 +24,7 @@ There are specific libraries that the user must ensure to have installed on thei
 - Database server
 
 ## Programming Languages
-- PHP used for backend
-- Javascript for frontend
-- mysql for database
+- PHP used for backend and for basic frontend work
+- HTML forms for page generation 
+- 
 
