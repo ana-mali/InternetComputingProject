@@ -19,13 +19,28 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST'){
     //mysqli_close($conn);
 ?>
 
+<style type="text/css">
+
+legend {
+    font-size:  1.4em;
+    font-weight:  bold;
+    background:#dcf500;
+    border:1px solid #000;
+}
+* html legend{  
+    margin-top:-10px;
+    position:relative;
+}
+</style>
+
 <form method="POST">
-    <label for="username">Username:</label>
+    <legend>Login Student Grade Database</legend><br>
+    <label for="username">Username:</label><br>
     <input type="text" name="username" id="username">
-    <br>
-    <label for="password">Password:</label>
+    <br><br>
+    <label for="password">Password:</label><br>
     <input type="password" name="password" id="password">
-    <br>
+    <br><br>
     <?php if (isset($error)): ?>
         <p><?php echo $error; ?></p>
     <?php endif; ?>

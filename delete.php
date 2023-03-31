@@ -1,3 +1,22 @@
+<style type="text/css">
+
+legend {
+    font-size:  1.4em;
+    font-weight:  bold;
+    background:#ff033d;
+    border:1px solid #000;
+}
+* html legend{  
+    margin-top:-10px;
+    position:relative;
+}
+</style>
+<div style = "position:static;">
+<form method="POST">
+    <legend>Delete Student Grade</legend>	
+</form>
+</div>
+
 <?php
 session_start();
 $user = $_SESSION['username'];
@@ -53,11 +72,11 @@ if(isset($_POST['course'])){
 ?>
 
 <form method="POST">
-	<button type="submit" name="course">Main Paige</button><br>
-    <label for="StudentID">StudentID:</label>
-    <input type="text" name="StudentID" id="StudentID"><br>
-    <label for="Course">Course:</label>
-    <input type="text" name="Course" id="Course"><br>
+	<button type="submit" name="course">Main Page</button><br><br>
+    <label for="StudentID">StudentID:</label><br>
+    <input type="text" name="StudentID" id="StudentID" placeholder="Enter StudentID" pattern="[0-9]{9}" title="Nine Digits"><br><br>
+    <label for="Course">Course:</label><br>
+    <input type="text" name="Course" id="Course" placeholder="Enter Course ID" pattern="[A-Z]{2}[0-9]{3}" title="Two capital letters followed by three digits, Ex. CP220"><br><br>
     <button type="submit" name="delete">DELETE</button>
     <!--<button class="backbutton">GoBack</button>-->
 	
@@ -71,6 +90,10 @@ if(isset($_POST['course'])){
             background-color: #4CAF50;
             color: white;
             border: none;
+        }
+
+        label {
+            margin-bottom: 20px;
         }
     </style>
 </form>

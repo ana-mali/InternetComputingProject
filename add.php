@@ -1,3 +1,22 @@
+<style type="text/css">
+
+legend {
+    font-size:  1.4em;
+    font-weight:  bold;
+    background:#40f749;
+    border:1px solid #000;
+}
+* html legend{  
+    margin-top:-10px;
+    position:relative;
+}
+</style>
+<div style = "position:static;">
+<form method="POST">
+    <legend>Add Student Grade</legend>	
+</form>
+</div>
+
 <?php
 session_start();
 $user = $_SESSION['username'];
@@ -14,6 +33,8 @@ $preparedstatement2->bind_param('is',$StudentID, $Name);
 $preparedstatement3 = $conn->prepare("INSERT INTO coursetable (StudentID,Course,Test1,Test2,Test3,Finalexam) VALUES (?,?,?,?,?,?)");
 $preparedstatement3->bind_param('isdddd',$StudentID, $Course, $One,$Two,$Three,$Finalexam);
 
+
+
 #Adding Querys
 if(isset($_POST['add'])){
 	#Assigning values to variables
@@ -24,6 +45,8 @@ if(isset($_POST['add'])){
     $Two = $_POST['Test2'];
     $Three = $_POST['Test3'];
     $Finalexam = $_POST['Finalexam'];
+
+    
 	
 	#Checking if boxes are empty
     if (empty($_POST['StudentID']) or empty($_POST['Name']) or
@@ -32,7 +55,10 @@ if(isset($_POST['add'])){
 
 		echo "Please fill all information";
 
-    }else{
+    }
+
+    #Valid values entered run query
+    else{
         
 		$query="SELECT * FROM nametable WHERE StudentID='$StudentID'";
         $result = mysqli_query($conn, $query);
@@ -79,34 +105,42 @@ if(isset($_POST['main'])){
 
 
 
-<form method="POST">
-	<button type="submit" name="main">Main Paige</button><br>
-    <label for="StudentID">StudentID:</label>
-    <input type="text" name="StudentID" id="StudentID"><br>
-    <label for="Name">Name:</label>
-    <input type="text" name="Name" id="Name"><br>
-    <label for="Course">Course:</label>
-    <input type="text" name="Course" id="Course"><br>
-    <label for="Test1">Test1:</label>
-    <input type="text" name="Test1" id="Test1"><br>
-    <label for="Test2">Test2:</label>
-    <input type="text" name="Test2" id="Test2"><br>
-    <label for="Test3">Test3:</label>
-    <input type="text" name="Test3" id="Test3"><br>
-    <label for="Finalexam">FinalExam:</label>
-    <input type="text" name="Finalexam" id="Finalexam"><br>
-    <button type="submit" name="add">ADD</button>
-    <!--<button class="backbutton">GoBack</button>-->
 
-    <style>
-        .backbutton {
-            position: fixed;
-            top: 0;
-            left: 0;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-        }
-    </style>
+<style type="text/css">
+
+label {
+    margin-bottom: 20px;
+}
+
+input[type='number']{
+    width: 170px;
+}
+</style>
+
+<form method="POST">
+	<button type="submit" name="main">Main Page</button><br><br>
+
+    <label for="StudentID">StudentID:</label><br>
+    <input type="text" name="StudentID" id="StudentID" placeholder="Enter StudentID" pattern="[0-9]{9}" title="Nine Digits"><br><br>
+
+    <label for="Name">Name:</label><br>
+    <input type="text" name="Name" id="Name" placeholder="Enter Full Name" pattern="[A-Z]{1}[a-z].{0,} [A-Z]{1}[a-z].{0,}" title="First and Last Name with Capitalization"><br><br>
+    
+    <label for="Course">Course:</label><br>
+    <input type="text" name="Course" id="Course" placeholder="Enter Course ID" pattern="[A-Z]{2}[0-9]{3}" title="Two capital letters followed by three digits, Ex. CP220"><br><br>
+
+    <label for="Test1">Test1:</label><br>
+    <input type="number" step="0.1" name="Test1" id="Test1" placeholder="Enter Test 1 Value" min="0" max="100"><br><br>
+
+    <label for="Test2">Test2:</label><br>
+    <input type="number" step="0.1" name="Test2" id="Test2" placeholder="Enter Test 2 Value" min="0" max="100"><br><br>
+
+    <label for="Test3">Test3:</label><br>
+    <input type="number" step="0.1" name="Test3" id="Test3" placeholder="Enter Test 3 Value" min="0" max="100"><br><br>
+
+    <label for="Finalexam">Final Exam:</label><br>
+    <input type="number" step="0.1" name="Finalexam" id="Finalexam" placeholder="Enter Final Exam Value" min="0" max="100"><br><br>
+
+    <button type="submit" name="add">ADD</button>
+
 </form>
