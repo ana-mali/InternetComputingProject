@@ -1,3 +1,22 @@
+<style type="text/css">
+
+legend {
+    font-size:  1.4em;
+    font-weight:  bold;
+    background:#26e9ff;
+    border:1px solid #000;
+}
+* html legend{  
+    margin-top:-10px;
+    position:relative;
+}
+</style>
+<div style = "position:static;">
+<form method="POST">
+    <legend>Modify/Delete Student Name</legend>	
+</form>
+</div>
+
 <?php
 session_start();
 $user = $_SESSION['username'];
@@ -22,8 +41,8 @@ if(isset($_POST['delete'])){
 	header("Location:mainpage.php");
 }
 echo "<form method='post'>";
-echo "<label for='name'>Name:</label>";
-echo "<input type='text' name='name' id='name' value='".$row['name']."'><br>";
+echo "<label for='name'>Name:</label><br>";
+echo "<input type='text' name='name' id='name' value='".$row['name']."' pattern='[A-Z]{1}[a-z].{0,} [A-Z]{1}[a-z].{0,}' title='First and Last Name with Capitalization'><br><br>";
 echo "<input type='submit' name='edit' value='Modify'/>";
 echo "<input type='submit' name='delete' value='Delete'/>";
 echo "</form>";
